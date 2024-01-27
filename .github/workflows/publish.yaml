@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - lecture/*
 
 jobs:
   publish:
@@ -9,7 +9,7 @@ jobs:
     permissions:
       id-token: write
       pages: write
-    enviornment:
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
@@ -17,12 +17,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          chache: "npm"
+          cache: "npm"
       - run: npm ci
       - run: npm run build
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: build
-          path: .\dist
+          path: ./dist
       - uses: actions/deploy-pages@v4
         id: deployment
