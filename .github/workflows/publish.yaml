@@ -9,7 +9,9 @@ jobs:
     permissions:
       id-token: write
       pages: write
-
+    enviornment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -23,3 +25,4 @@ jobs:
           name: build
           path: .\dist
       - uses: actions/deploy-pages@v4
+        id: deployment
